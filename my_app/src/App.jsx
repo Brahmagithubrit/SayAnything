@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import "./App.css";
+import Box from "@mui/material/Box";
+import { CssBaseline, TextField, Button, Container } from "@mui/material";
 
 function App() {
   const [input, setInput] = useState("");
@@ -56,41 +58,40 @@ function App() {
 
   return (
     <>
-      <div
-        style={{
-          backgroundColor: "Red",
-          height: 200,
-          width: 200,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        {" "}
-        Hello World
-      </div>
       <div>
-        <div
-          style={{ background: "gray", padding: "10px", marginBottom: "10px" }}
-        >
-          <ul>
-            {msgList.map((msg, index) => (
-              <li key={index}>{msg.text}</li>
-            ))}
-          </ul>
-        </div>
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Type a message"
-        />
-        <button onClick={handleSend}>Send</button>
         {notification && (
           <div style={{ color: "red", marginTop: "10px" }}>
             <strong>{notification}</strong>
           </div>
         )}
+        <div className="container">
+          <Container maxWidth="sm">
+            <ul>
+              {msgList.map((msg, index) => (
+                <li key={index}>{msg.text}</li>
+              ))}
+            </ul>
+          </Container>
+        </div>
+      </div>
+      <div className="foot">
+        <Box
+          component="form"
+          sx={{ "& > :not(style)": { m: 1, width: "25ch" } }}
+          noValidate
+          autoComplete="on"
+        >
+          <TextField
+            id="filled-basic"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            label="Type Message"
+            variant="standard"
+          />
+        </Box>
+        <Button onClick={handleSend} variant="contained">
+          Send
+        </Button>
       </div>
     </>
   );
