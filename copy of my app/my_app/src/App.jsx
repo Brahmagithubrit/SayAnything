@@ -64,9 +64,7 @@ function App() {
       {userName && (
         <div className="chat-app">
           <div className="header">
-            <h1>
-              <span style={{ fontWeight: 10 }}>built by    </span>Brahma😊
-            </h1>
+            <h1>Chat App</h1>
           </div>
           {notification && (
             <div className="notification">
@@ -92,13 +90,14 @@ function App() {
           <div className="message-container">
             <Container maxWidth="sm">
               <ul className="message-list">
-                {msgList.map((msg, index) => (
-                  <li key={index}>
-                    {userName}
-                    {`:`}
-                    {msg.text}
-                  </li>
-                ))}
+                {msgList.map((msg, index) => {
+                  console.log(msg);
+                  return (
+                    <li key={index}>
+                      {userName}: {msg.text}
+                    </li>
+                  );
+                })}
               </ul>
             </Container>
           </div>
@@ -139,7 +138,7 @@ function App() {
 export const Info = ({ userName, setUserName }) => {
   const [input, setInput] = useState("");
   return (
-    <div className="InputName">
+    <div className="chat-app">
       <TextField
         className="input"
         id="chat-input"

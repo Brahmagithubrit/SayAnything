@@ -73,7 +73,6 @@
 .input {
   background-color: white;
   border-radius: 20px;
-  
 }
 
 .send-button {
@@ -83,16 +82,6 @@
   border-radius: 50% !important;
 }
 
-.InputName {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 500px;
-  margin: 20px;
-  padding: 10px;
-  flex-direction: column;
-  gap: 20px;
-}
 /* Media query for desktop */
 @media (min-width: 768px) {
   .chat-app {
