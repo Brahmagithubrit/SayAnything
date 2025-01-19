@@ -1,15 +1,10 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import "./App.css";
 import Box from "@mui/material/Box";
-import {
-  Alert,
-  CssBaseline,
-  TextField,
-  Button,
-  Container,
-} from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
 
+import { Alert, TextField, Button, Container } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 function App() {
@@ -17,9 +12,9 @@ function App() {
   const [msgList, setMsgList] = useState([]);
   const [socket, setSocket] = useState(null);
   const [notification, setNotification] = useState("");
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
-    // const backend_url = import.meta.env.VITE_API_URL;
     const newSocket = io(`https://sayanything-backend.onrender.com/`);
     setSocket(newSocket);
 
@@ -66,55 +61,103 @@ function App() {
 
   return (
     <>
-      <div>
-        {notification && (
-          <div className="notification">
-            <Alert
-              severity="success"
-              iconMapping={{
-                success: <CheckCircleOutlineIcon fontSize="inherit" />,
-              }}
-              action={
-                <Button color="inherit" size="small">
-                  x
-                </Button>
-              }
-            >
-              New Message arrive , check it out !
-            </Alert>
+      {userName && (
+        <div className="chat-app">
+          <div className="header">
+            <h1>Chat App</h1>
           </div>
-        )}
-        <div className="container">
-          <Container maxWidth="sm">
-            <ul>
-              {msgList.map((msg, index) => (
-                <li key={index}>{msg.text}</li>
-              ))}
-            </ul>
-          </Container>
+          {notification && (
+            <div className="notification">
+              <Alert
+                severity="success"
+                iconMapping={{
+                  success: <CheckCircleOutlineIcon fontSize="inherit" />,
+                }}
+                action={
+                  <Button
+                    color="inherit"
+                    size="small"
+                    onClick={() => setNotification("")}
+                  >
+                    x
+                  </Button>
+                }
+              >
+                New Message arrived, check it out!
+              </Alert>
+            </div>
+          )}
+          <div className="message-container">
+            <Container maxWidth="sm">
+              <ul className="message-list">
+                {msgList.map((msg, index) => (
+                  <li key={index} className={`message ${msg.sender}`}>
+                    {userName}
+                    {`:`}
+                    {msg.text}
+                  </li>
+                ))}
+              </ul>
+            </Container>
+          </div>
+          <div className="footer">
+            <Box
+              component="form"
+              sx={{ display: "flex", alignItems: "center", width: "100%" }}
+              noValidate
+              autoComplete="off"
+            >
+              <TextField
+                className="input"
+                id="chat-input"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Type a message"
+                variant="outlined"
+                fullWidth
+              />
+              <Button
+                onClick={handleSend}
+                variant="contained"
+                color="info"
+                className="send-button"
+              >
+                <SendIcon />
+              </Button>
+            </Box>
+          </div>
         </div>
-      </div>
-      <div className="foot">
-        <Box
-          component="form"
-          sx={{ "& > :not(style)": { m: 1, width: "100%" } }}
-          noValidate
-          autoComplete="on"
-        >
-          <TextField
-            id="filled-basic"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            label="Type Message"
-            variant="standard"
-          />
-        </Box>
-        <Button onClick={handleSend} variant="contained">
-          Send
-        </Button>
-      </div>
+      )}
+
+      {!userName && <Info userName={userName} setUserName={setUserName} />}
     </>
   );
 }
+
+export const Info = ({ userName, setUserName }) => {
+  const [input, setInput] = useState("");
+  return (
+    <div className="chat-app">
+      <TextField
+        className="input"
+        id="chat-input"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="Enter Your Short Name"
+        variant="standard"
+        fullWidth
+      />
+      <Button
+        color="primary"
+        variant="contained"
+        onClick={() => {
+          setUserName(input);
+        }}
+      >
+        Set
+      </Button>
+    </div>
+  );
+};
 
 export default App;
