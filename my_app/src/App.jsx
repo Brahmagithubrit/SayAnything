@@ -12,7 +12,6 @@ import {
 
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
-
 function App() {
   const [input, setInput] = useState("");
   const [msgList, setMsgList] = useState([]);
