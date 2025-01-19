@@ -97,7 +97,7 @@ function App() {
                 {msgList.map((msg, index) => (
                   <li key={index}>
                     {` > `}
-                    {msg.text}
+                    {typeof msg === "string" ? msg : msg.text}
                   </li>
                 ))}
               </ul>
