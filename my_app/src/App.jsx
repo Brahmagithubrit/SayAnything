@@ -10,7 +10,10 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 function App() {
   const [input, setInput] = useState("");
-  const [msgList, setMsgList] = useState([]);
+  const [msgList, setMsgList] = useState([
+    "This is brahma gossip server",
+    "anybody present here feel free to msg😊",
+  ]);
   const [socket, setSocket] = useState(null);
   const [notification, setNotification] = useState("");
   const [userName, setUserName] = useState("");
