@@ -91,7 +91,7 @@ function App() {
             <Container maxWidth="sm">
               <ul className="message-list">
                 {msgList.map((msg, index) => (
-                  <li key={index} className={`message ${msg.sender}`}>
+                  <li key={index}>
                     {userName}
                     {`:`}
                     {msg.text}
