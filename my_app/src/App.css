@@ -8,8 +8,8 @@
 }
 
 .header {
-  background-color: #075e54;
-  color: white;
+  /* background-color: #075e54;
+  color: white;*/
   padding: 10px 16px;
   position: sticky;
   top: 0;
@@ -39,7 +39,7 @@
 .message-list {
   list-style-type: none;
   padding: 0;
-  margin: 0;
+  margin: 10px;
 }
 
 .message {
@@ -73,7 +73,6 @@
 .input {
   background-color: white;
   border-radius: 20px;
-  
 }
 
 .send-button {

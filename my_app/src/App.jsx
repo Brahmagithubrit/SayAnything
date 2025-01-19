@@ -3,7 +3,8 @@ import { io } from "socket.io-client";
 import "./App.css";
 import Box from "@mui/material/Box";
 import SendIcon from "@mui/icons-material/Send";
-
+import MenuAppBar from "./MenuAppBar";
+import SimpleInputCard from "./InputCard";
 import { Alert, TextField, Button, Container } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
@@ -64,9 +65,7 @@ function App() {
       {userName && (
         <div className="chat-app">
           <div className="header">
-            <h1>
-              <span style={{ fontWeight: 10 }}>built by    </span>Brahma😊
-            </h1>
+            <MenuAppBar />
           </div>
           {notification && (
             <div className="notification">
@@ -131,35 +130,39 @@ function App() {
         </div>
       )}
 
-      {!userName && <Info userName={userName} setUserName={setUserName} />}
+      {!userName && (
+        <div>
+          <SimpleInputCard userName={userName} setUserName={setUserName} />
+        </div>
+      )}
     </>
   );
 }
 
-export const Info = ({ userName, setUserName }) => {
-  const [input, setInput] = useState("");
-  return (
-    <div className="InputName">
-      <TextField
-        className="input"
-        id="chat-input"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="Enter Your Short Name"
-        variant="standard"
-        fullWidth
-      />
-      <Button
-        color="primary"
-        variant="contained"
-        onClick={() => {
-          setUserName(input);
-        }}
-      >
-        Set
-      </Button>
-    </div>
-  );
-};
+// export const Info = ({ userName, setUserName }) => {
+//   const [input, setInput] = useState("");
+//   return (
+//     <div className="InputName">
+//       <TextField
+//         className="input"
+//         id="chat-input"
+//         value={input}
+//         onChange={(e) => setInput(e.target.value)}
+//         placeholder="Enter Your Short Name"
+//         variant="standard"
+//         fullWidth
+//       />
+//       <Button
+//         color="primary"
+//         variant="contained"
+//         onClick={() => {
+//           setUserName(input);
+//         }}
+//       >
+//         Set
+//       </Button>
+//     </div>
+//   );
+// };
 
 export default App;
