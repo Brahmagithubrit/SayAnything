@@ -2,7 +2,14 @@ import { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import "./App.css";
 import Box from "@mui/material/Box";
-import { CssBaseline, TextField, Button, Container } from "@mui/material";
+import {
+  Alert,
+  CssBaseline,
+  TextField,
+  Button,
+  Container,
+  CheckCircleOutlineIcon,
+} from "@mui/material";
 
 function App() {
   const [input, setInput] = useState("");
@@ -60,8 +67,20 @@ function App() {
     <>
       <div>
         {notification && (
-          <div style={{ color: "red", marginTop: "10px" }}>
-            <strong>{notification}</strong>
+          <div className="notification">
+            <Alert
+              severity="success"
+              iconMapping={{
+                success: <CheckCircleOutlineIcon fontSize="inherit" />,
+              }}
+              action={
+                <Button color="inherit" size="small">
+                  x
+                </Button>
+              }
+            >
+              New Message arrive , check it out !
+            </Alert>
           </div>
         )}
         <div className="container">
@@ -77,7 +96,7 @@ function App() {
       <div className="foot">
         <Box
           component="form"
-          sx={{ "& > :not(style)": { m: 1, width: "25ch" } }}
+          sx={{ "& > :not(style)": { m: 1, width: "100%" } }}
           noValidate
           autoComplete="on"
         >
