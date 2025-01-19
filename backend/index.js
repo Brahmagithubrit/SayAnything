@@ -10,7 +10,7 @@ const port = process.env.port || 5000;
 
 app.use(
   cors({
-    origin: `${process.env.frontend_url}`,
+    origin: `https://sayanythingfrontend.vercel.app`,
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
@@ -21,7 +21,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: `${process.env.frontend_url}`,
+    origin: `https://sayanythingfrontend.vercel.app`,
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
@@ -47,5 +47,7 @@ app.get("/", (req, res) => {
 });
 
 server.listen(port, () => {
-  console.log(`WebSocket server running on https://say-anything-one.vercel.app:${port}`);
+  console.log(
+    `WebSocket server running on https://say-anything-one.vercel.app:${port}`
+  );
 });

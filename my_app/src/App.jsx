@@ -9,8 +9,8 @@ function App() {
   const [notification, setNotification] = useState("");
 
   useEffect(() => {
-    const backend_url = import.meta.env.VITE_API_URL;
-    const newSocket = io(`${backend_url}`);
+    // const backend_url = import.meta.env.VITE_API_URL;
+    const newSocket = io(`https://sayanything-backend.onrender.com/`);
     setSocket(newSocket);
 
     newSocket.on("connect", () => {
