@@ -9,21 +9,18 @@ function App() {
   const [notification, setNotification] = useState("");
 
   useEffect(() => {
-
-    const backend_url = import.meta.env.VITE_API_URL;
-    const newSocket = io(`${backend_url}`);
-    setSocket(newSocket);
+    // const backend_url = import.meta.env.VITE_API_URL;
+    // const newSocket = io(`${backend_url}`);
+    // setSocket(newSocket);
 
     newSocket.on("connect", () => {
       console.log("Connected to server, socket ID:", newSocket.id);
     });
 
-    // Listen for incoming messages
     newSocket.on("message", (msg) => {
       console.log("Received message from server:", msg);
       setMsgList((prev) => [...prev, msg]);
 
-      // Check if the message was sent by this tab
       if (msg.socketId !== newSocket.id) {
         handleNotification();
       }
@@ -50,9 +47,8 @@ function App() {
   const handleSend = () => {
     if (socket) {
       console.log("Sending message:", input);
-      // Emit message along with the sender's socket ID
       socket.emit("message", { text: input, socketId: socket.id });
-      setInput(""); // Clear input field
+      setInput("");
     } else {
       console.error("Socket is not connected");
     }
