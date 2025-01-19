@@ -65,7 +65,7 @@ function App() {
       {userName && (
         <div className="chat-app">
           <div className="header">
-            <MenuAppBar />
+            <MenuAppBar userName={userName} />
           </div>
           {notification && (
             <div className="notification">
@@ -93,7 +93,6 @@ function App() {
               <ul className="message-list">
                 {msgList.map((msg, index) => (
                   <li key={index}>
-                    {userName}
                     {`:`}
                     {msg.text}
                   </li>

@@ -12,7 +12,8 @@ import FormGroup from "@mui/material/FormGroup";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 
-export default function MenuAppBar() {
+export default function MenuAppBar({ userName }) {
+  const [Name, setName] = React.useState("");
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -27,7 +28,9 @@ export default function MenuAppBar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  React.useEffect(() => {
+    setName(userName);
+  }, []);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -71,7 +74,7 @@ export default function MenuAppBar() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>{Name}</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
               </Menu>
             </div>
