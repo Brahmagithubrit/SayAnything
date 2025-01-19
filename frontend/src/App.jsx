@@ -10,7 +10,7 @@ function App() {
 
   useEffect(() => {
 
-    const backend_url = import.meta.env.VITE_REACT_BACKEND_URL;
+    const backend_url = import.meta.env.VITE_API_URL;
     const newSocket = io(`${backend_url}`);
     setSocket(newSocket);
 

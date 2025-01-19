@@ -47,5 +47,5 @@ app.get("/", (req, res) => {
 });
 
 server.listen(port, () => {
-  console.log(`WebSocket server running on http://localhost:${port}`);
+  console.log(`WebSocket server running on https://say-anything-one.vercel.app:${port}`);
 });
