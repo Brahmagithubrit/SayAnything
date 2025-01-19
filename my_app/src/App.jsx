@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-
+import { useState, useEffect } from "react";
+import { io } from "socket.io-client";
 import "./App.css";
 
 function App() {
@@ -7,6 +7,43 @@ function App() {
   const [msgList, setMsgList] = useState([]);
   const [socket, setSocket] = useState(null);
   const [notification, setNotification] = useState("");
+
+  useEffect(() => {
+    const backend_url = import.meta.env.VITE_API_URL;
+    const newSocket = io(`${backend_url}`);
+    setSocket(newSocket);
+
+    newSocket.on("connect", () => {
+      console.log("Connected to server, socket ID:", newSocket.id);
+    });
+
+    newSocket.on("message", (msg) => {
+      console.log("Received message from server:", msg);
+      setMsgList((prev) => [...prev, msg]);
+
+      if (msg.socketId !== newSocket.id) {
+        handleNotification();
+      }
+    });
+
+    newSocket.on("disconnect", () => {
+      console.log("Disconnected from server");
+    });
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }, []);
+
+  const handleNotification = () => {
+    if (!notification) {
+      setNotification("A new message arrived, check it out!");
+      setTimeout(() => {
+        setNotification("");
+      }, 3000);
+    }
+  };
+
   const handleSend = () => {
     if (socket) {
       console.log("Sending message:", input);
@@ -16,6 +53,7 @@ function App() {
       console.error("Socket is not connected");
     }
   };
+
   return (
     <>
       <div
