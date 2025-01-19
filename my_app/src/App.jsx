@@ -93,7 +93,7 @@ function App() {
               <ul className="message-list">
                 {msgList.map((msg, index) => (
                   <li key={index}>
-                    {`:`}
+                    {` > `}
                     {msg.text}
                   </li>
                 ))}
