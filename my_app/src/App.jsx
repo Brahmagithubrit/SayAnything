@@ -7,6 +7,7 @@ import MenuAppBar from "./MenuAppBar";
 import SimpleInputCard from "./InputCard";
 import { Alert, TextField, Button, Container } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import axios from "axios";
 
 function App() {
   const [input, setInput] = useState("");
@@ -19,7 +20,9 @@ function App() {
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
+    fetchMessages();
     const newSocket = io(`https://sayanything-backend.onrender.com/`);
+    // const newSocket = io(`http://localhost:5000`);
     setSocket(newSocket);
 
     newSocket.on("connect", () => {
@@ -56,10 +59,45 @@ function App() {
   const handleSend = () => {
     if (socket) {
       console.log("Sending message:", input);
-      socket.emit("message", { text: input, socketId: socket.id });
+      socket.emit("message", {
+        userName: userName,
+        text: input,
+        socketId: socket.id,
+      });
+      handleMessageStore(input);
       setInput("");
     } else {
       console.error("Socket is not connected");
+    }
+  };
+
+  const handleMessageStore = async (message) => {
+    const Data_to_store = {
+      userName: userName,
+      text: message,
+      time: Date.now(),
+    };
+    try {
+      await axios.post(
+        `https://sayanything-backend.onrender.com/StoreChat`,
+        Data_to_store
+      );
+      console.log("Message stored successfully");
+    } catch (error) {
+      console.error("Error storing chat:", error.message);
+      console.error("Error response data:", error.response?.data);
+    }
+  };
+  const fetchMessages = async () => {
+    try {
+      const response = await axios.get(
+        `https://sayanything-backend.onrender.com/GetChats`
+      );
+      const { data } = response;
+      setMsgList((prev) => [...prev, ...data]);
+    } catch (error) {
+      console.error("Error fetching messages:", error.message);
+      console.error("Error response data:", error.response?.data);
     }
   };
 
@@ -95,9 +133,21 @@ function App() {
             <Container maxWidth="sm">
               <ul className="message-list">
                 {msgList.map((msg, index) => (
-                  <li key={index}>
-                    {` > `}
-                    {typeof msg === "string" ? msg : msg.text}
+                  <li
+                    key={index}
+                    className={`chat-message ${msg.userName === userName ? "right" : "left"}`}
+                  >
+                    <div className="message-header">
+                      <span className="message-username">{msg.userName}</span>
+                      <span className="message-time">
+                        {!msg.time
+                          ? "now"
+                          : Date.now() - msg.time <= 60000
+                            ? "within 1 minute"
+                            : new Date(msg.time).toLocaleTimeString()}
+                      </span>
+                    </div>
+                    <div className="message-text">{msg.text}</div>
                   </li>
                 ))}
               </ul>
@@ -140,31 +190,5 @@ function App() {
     </>
   );
 }
-
-// export const Info = ({ userName, setUserName }) => {
-//   const [input, setInput] = useState("");
-//   return (
-//     <div className="InputName">
-//       <TextField
-//         className="input"
-//         id="chat-input"
-//         value={input}
-//         onChange={(e) => setInput(e.target.value)}
-//         placeholder="Enter Your Short Name"
-//         variant="standard"
-//         fullWidth
-//       />
-//       <Button
-//         color="primary"
-//         variant="contained"
-//         onClick={() => {
-//           setUserName(input);
-//         }}
-//       >
-//         Set
-//       </Button>
-//     </div>
-//   );
-// };
 
 export default App;
