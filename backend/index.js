@@ -35,7 +35,11 @@ io.on("connection", (socket) => {
 
   socket.on("message", (msg) => {
     console.log(`Received from client: ${msg}`);
-    io.emit("message", {userName:msg.userName, text: msg.text, socketId: socket.id });
+    io.emit("message", {
+      userName: msg.userName,
+      text: msg.text,
+      socketId: socket.id,
+    });
     console.log(`Sent back to all clients: ${msg}`);
   });
 
