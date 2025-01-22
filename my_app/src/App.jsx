@@ -7,6 +7,8 @@ import MenuAppBar from "./MenuAppBar";
 import SimpleInputCard from "./InputCard";
 import { Alert, TextField, Button, Container } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import { Card, CardContent, Typography } from "@mui/material";
+
 import axios from "axios";
 
 function App() {
@@ -115,6 +117,13 @@ function App() {
           <div className="header">
             <MenuAppBar userName={userName} />
           </div>
+          <Card className="chat-server-card">
+            <CardContent>
+              <Typography className="rough" variant="h5" component="div">
+                Outr Cse ChatServer
+              </Typography>
+            </CardContent>
+          </Card>
           {notification && (
             <div className="notification">
               <Alert
