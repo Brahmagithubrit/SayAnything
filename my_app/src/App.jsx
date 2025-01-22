@@ -22,7 +22,6 @@ function App() {
   useEffect(() => {
     fetchMessages();
     const newSocket = io(`https://sayanything-backend.onrender.com/`);
-    // const newSocket = io(`http://localhost:5000`);
     setSocket(newSocket);
 
     newSocket.on("connect", () => {
@@ -88,13 +87,21 @@ function App() {
       console.error("Error response data:", error.response?.data);
     }
   };
+
   const fetchMessages = async () => {
     try {
       const response = await axios.get(
         `https://sayanything-backend.onrender.com/GetChats`
       );
       const { data } = response;
-      setMsgList((prev) => [...prev, ...data]);
+      setMsgList((prev) => [
+        ...prev,
+        ...data.map((msg) => ({
+          ...msg,
+          userName: msg.userName || "Unknown🤔",
+          time: msg.time || Date.now(),
+        })),
+      ]);
     } catch (error) {
       console.error("Error fetching messages:", error.message);
       console.error("Error response data:", error.response?.data);
