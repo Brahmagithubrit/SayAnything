@@ -1,4 +1,4 @@
-.chat-app {
+.chat-app{
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -92,6 +92,7 @@
   flex-direction: column;
   gap: 20px;
 }
+
 .chat-message {
   padding: 10px;
   margin: 10px 0;

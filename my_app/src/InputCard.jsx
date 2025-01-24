@@ -20,9 +20,19 @@ export default function SimpleInputCard({ userName, setUserName }) {
     setInput(event.target.value);
   };
 
+  const adminNameNotTaken = (input) => {
+    if (input.toLowerCase().includes("brahma")) {
+      alert("You cannot take admin name😊 , choose another name ");
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = () => {
-    console.log("Input submitted:", input);
-    setUserName(input);
+    if (adminNameNotTaken(input)) {
+      console.log("Input submitted:", input);
+      setUserName(input);
+    }
   };
 
   return (
