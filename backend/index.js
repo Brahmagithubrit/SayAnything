@@ -15,7 +15,7 @@ const port = process.env.port || 5000;
 
 app.use(
   cors({
-    origin: `https://sayanythingfrontend.vercel.app`,
+    origin: `https://say-anything-pi.vercel.app`,
     // origin: `http://localhost:5173`,
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -27,7 +27,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: `https://sayanythingfrontend.vercel.app`,
+    origin: `https://say-anything-pi.vercel.app`,
     methods: ["GET", "POST"],
     // origin: `http://localhost:5173`,
 
@@ -78,7 +78,7 @@ app.post("/storeUser", async (req, res) => {
 
   try {
     await newUser.save();
-    res.status(200).json({ message: "User stored successfully" }); 
+    res.status(200).json({ message: "User stored successfully" });
   } catch (error) {
     console.error("Error saving user:", error);
     res.status(500).json({ message: "Error storing user" });
@@ -86,8 +86,6 @@ app.post("/storeUser", async (req, res) => {
 
   console.log(req.body);
 });
-
-
 
 server.listen(port, () => {
   console.log(`WebSocket server running on https://deploy:${port}`);
