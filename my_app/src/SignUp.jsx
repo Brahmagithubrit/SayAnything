@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { Box, Card, CardContent, Typography, Button } from "@mui/material";
-
 const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 export default function SignUp({ onLogin }) {
+  console.log(clientId);
   useEffect(() => {
     window.google.accounts.id.initialize({
       client_id: clientId,
