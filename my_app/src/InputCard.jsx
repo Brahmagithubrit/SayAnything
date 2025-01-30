@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-
 import {
   Box,
   TextField,
@@ -14,7 +13,12 @@ import {
 
 const theme = createTheme();
 
-export default function SimpleInputCard({ userName, setUserName }) {
+export default function SimpleInputCard({
+  userName,
+  setUserName,
+  email,
+  actualName,
+}) {
   const [input, setInput] = useState("");
 
   const handleInputChange = (event) => {
@@ -29,65 +33,82 @@ export default function SimpleInputCard({ userName, setUserName }) {
     return true;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (adminNameNotTaken(input)) {
       console.log("Input submitted:", input);
       setUserName(input);
+
+      const userData = {
+        userName: input,
+        email: email,
+        actualName: actualName,
+      };
+
+      try {
+        const response = await fetch("http://localhost:5000/storeUser", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to submit data to the backend");
+        }
+
+        const result = await response.json();
+        console.log("Backend response:", result);
+        // alert("Your data has been submitted successfully!");
+      } catch (error) {
+        console.error("Error submitting data:", error);
+        // alert("There was an error submitting your data. Please try again.");
+      }
     }
   };
+
 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="sm">
         <Box
           sx={{
-            marginTop: 8,
             display: "flex",
+            justifyContent: "center",
             flexDirection: "column",
             alignItems: "center",
+            backgroundColor: "#f7f7f7",
+            borderRadius: "10px",
+            padding: "2rem",
           }}
         >
-          <Card elevation={3} sx={{ width: "100%", maxWidth: 400 }}>
+          <Card sx={{ width: "100%" }}>
             <CardContent>
-              <Typography
-                component="h1"
-                variant="h5"
-                align="center"
-                gutterBottom
-              >
-                Welcome
+              <Typography variant="h5">Enter Your Name</Typography>
+              <Typography variant="body2" color="textSecondary">
+                {`You are logged in as ${actualName} (${email})`}
               </Typography>
-              <Typography
-                variant="subtitle1"
-                align="center"
-                color="text.secondary"
-                gutterBottom
-              >
-                Please provide your short name to proceed
-              </Typography>
-              <Box component="form" noValidate sx={{ mt: 3 }}>
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="input"
-                  label="Name"
-                  name="input"
-                  autoFocus
-                  value={input}
-                  onChange={handleInputChange}
-                />
-                <Button
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  onClick={handleSubmit}
-                >
-                  Process
-                </Button>
-              </Box>
             </CardContent>
           </Card>
+          <TextField
+            sx={{
+              marginTop: 2,
+              marginBottom: 2,
+              width: "100%",
+            }}
+            label="Enter your username"
+            variant="outlined"
+            value={input}
+            onChange={handleInputChange}
+          />
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={handleSubmit}
+          >
+            Submit
+          </Button>
         </Box>
       </Container>
     </ThemeProvider>

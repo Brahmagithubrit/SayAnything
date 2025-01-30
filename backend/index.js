@@ -5,14 +5,18 @@ const http = require("http");
 const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
+
 app.use(express.json());
 const connectToDB = require("./db_config/db_connection");
 const Chat = require("./Models/Chat");
+const User = require("./Models/User");
+const User2 = require("./Models/User2");
 const port = process.env.port || 5000;
 
 app.use(
   cors({
     origin: `https://sayanythingfrontend.vercel.app`,
+    // origin: `http://localhost:5173`,
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
@@ -25,6 +29,8 @@ const io = new Server(server, {
   cors: {
     origin: `https://sayanythingfrontend.vercel.app`,
     methods: ["GET", "POST"],
+    // origin: `http://localhost:5173`,
+
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   },
@@ -65,6 +71,23 @@ app.get("/GetChats", async (req, res) => {
   console.log(All_chats);
   res.status(200).send(All_chats);
 });
+
+app.post("/storeUser", async (req, res) => {
+  const { userName, email, actualName } = req.body;
+  const newUser = new User2({ userName, email, actualName });
+
+  try {
+    await newUser.save();
+    res.status(200).json({ message: "User stored successfully" }); 
+  } catch (error) {
+    console.error("Error saving user:", error);
+    res.status(500).json({ message: "Error storing user" });
+  }
+
+  console.log(req.body);
+});
+
+
 
 server.listen(port, () => {
   console.log(`WebSocket server running on https://deploy:${port}`);
