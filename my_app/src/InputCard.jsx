@@ -88,9 +88,9 @@ export default function SimpleInputCard({
           <Card sx={{ width: "100%" }}>
             <CardContent>
               <Typography variant="h5">Enter Your Name</Typography>
-              <Typography variant="body2" color="textSecondary">
+              {/* <Typography variant="body2" color="textSecondary">
                 {`You are logged in as ${actualName} (${email})`}
-              </Typography>
+              </Typography> */}
             </CardContent>
           </Card>
           <TextField
