@@ -45,13 +45,16 @@ export default function SimpleInputCard({
       };
 
       try {
-        const response = await fetch("http://localhost:5000/storeUser", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(userData),
-        });
+        const response = await fetch(
+          "https://sayanything-backend.onrender.com/storeUser",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userData),
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Failed to submit data to the backend");

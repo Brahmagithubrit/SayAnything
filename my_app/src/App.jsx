@@ -281,7 +281,7 @@ function App() {
   useEffect(() => {
     if (acceptedPrivacy) {
       fetchMessages();
-      const newSocket = io("http://localhost:5000");
+      const newSocket = io("https://sayanything-backend.onrender.com");
       setSocket(newSocket);
 
       newSocket.on("connect", () => {
@@ -344,7 +344,10 @@ function App() {
       time: Date.now(),
     };
     try {
-      await axios.post(`http://localhost:5000/StoreChat`, Data_to_store);
+      await axios.post(
+        `https://sayanything-backend.onrender.com/StoreChat`,
+        Data_to_store
+      );
       console.log("Message stored successfully");
     } catch (error) {
       console.error("Error storing chat:", error.message);
@@ -353,7 +356,9 @@ function App() {
 
   const fetchMessages = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/GetChats`);
+      const response = await axios.get(
+        `https://sayanything-backend.onrender.com/GetChats`
+      );
       const { data } = response;
       setMsgList((prev) => [
         ...prev,
