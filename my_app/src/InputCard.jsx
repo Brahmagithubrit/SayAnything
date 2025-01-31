@@ -26,7 +26,7 @@ export default function SimpleInputCard({
   };
 
   const adminNameNotTaken = (input) => {
-    if (input.toLowerCase().includes("brahma")) {
+    if (input.toLowerCase().includes("brahma") || input.toLowerCase().includes("admin")) {
       alert("You cannot take admin name😊 , choose another name ");
       return false;
     }
@@ -87,10 +87,10 @@ export default function SimpleInputCard({
         >
           <Card sx={{ width: "100%" }}>
             <CardContent>
-              <Typography variant="h5">Enter Your Name</Typography>
-              {/* <Typography variant="body2" color="textSecondary">
-                {`You are logged in as ${actualName} (${email})`}
-              </Typography> */}
+              <Typography variant="h5">Provide Any Name For Collab</Typography>
+              <Typography variant="body2" color="textSecondary">
+                {`This name will be shown in the chat, and you remain anonymous.👻`}
+              </Typography>
             </CardContent>
           </Card>
           <TextField

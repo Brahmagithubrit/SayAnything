@@ -310,6 +310,9 @@ function App() {
   const handleLogin = (userInfo) => {
     const { email, name } = userInfo;
     setUserDetails({ email, actualName: name });
+    if (name === "Brahmananda Tosh") {
+      setUserName("Admin");
+    }
     setIsSignedIn(true);
   };
 
