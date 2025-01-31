@@ -15,7 +15,7 @@ const port = process.env.port || 5000;
 
 app.use(
   cors({
-    origin: `https://say-anything-9oszrfktb-brahmas-projects-9ff9c148.vercel.app`,
+    origin: `https://sayanythingbrahma.vercel.app`,
     // origin: `http://localhost:5173`,
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -27,7 +27,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: `https://say-anything-9oszrfktb-brahmas-projects-9ff9c148.vercel.app`,
+    origin: `https://sayanythingbrahma.vercel.app`,
     methods: ["GET", "POST"],
     // origin: `http://localhost:5173`,
 
